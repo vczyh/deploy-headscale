@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+  headscale:
+    image: "headscale/headscale:0.18.0-beta2"
+    container_name: headscale
+    volumes:
+      - ./config/config.yaml:/etc/headscale/config.yaml
+    ports:
+      - "28080:8080"
+      - "29090:9090"
+    command: headscale serve
+    restart: unless-stopped
+  headscale-ui:
+    image: "ghcr.io/gurucomputing/headscale-ui:latest"
+    restart: unless-stopped
+    container_name: headscale-ui
+    ports:
+      - "2443:443"
+      - "2280:80"
+  caddy:
+    image: caddy:2.6.2
+    restart: unless-stopped
+    container_name: caddy
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "2777:80"
+

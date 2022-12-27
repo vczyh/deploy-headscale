@@ -1,0 +1,5 @@
+:80 {
+	reverse_proxy /web* http://headscale-ui
+	reverse_proxy * http://headscale:8080
+}
+
